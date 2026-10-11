@@ -133,3 +133,25 @@ In Challenge 3, how a quantum circuit can produce correlated outcomes is investi
 - Histograms for both circuits.
 - A comparison of the two experiments.
 - A short explanation of how the circuit produces the different correlations.
+
+  Setup & Running the Notebooks
+Clone the repo:
+
+Bash
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+Install dependencies:
+
+Bash
+pip install qiskit qiskit-ibm-runtime matplotlib pylatexenc
+Authenticate IBM Quantum:
+
+Python
+from qiskit_ibm_runtime import QiskitRuntimeService
+QiskitRuntimeService.save_account(
+    channel="ibm_quantum_platform",
+    token="YOUR_IBM_QUANTUM_TOKEN",
+    instance="YOUR_CRN_OR_INSTANCE",
+    overwrite=True
+)
+
