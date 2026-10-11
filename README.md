@@ -1,23 +1,25 @@
 # IBM Quantum - Qiskit Fall Fest 2026
 **Vishnu Institute of Technology**
 
-This repository contains solutions, quantum circuit implementations, and hardware execution results for the four challenges of the Qiskit Fall Fest 2026.
+This repository contains solutions, quantum circuit implementations, and hardware execution results for all four challenges of the Qiskit Fall Fest 2026[cite: 1, 3, 4, 5].
 
 ---
 
-## Environment Setup & Requirements
+## Environment Setup & Installation
 
 ### 1. Prerequisites
-Ensure you have Python 3.10+ installed.
+Ensure you have Python 3.10 or newer installed.
 
-### 2. Install Required Packages
-Install the required Qiskit libraries, IBM Quantum runtime client, and visualization tools:
+### 2. Install Required Dependencies
+Run the following command in your terminal to install Qiskit, the IBM Quantum Runtime client, and plotting tools[cite: 2]:
 
-```bash
 pip install --upgrade qiskit qiskit-ibm-runtime matplotlib pylatexenc
-3. Save IBM Quantum Platform CredentialsTo authenticate and execute circuits on physical quantum backends using your API token and instance CRN:   Pythonfrom qiskit_ibm_runtime import QiskitRuntimeService
 
-# Save credentials to local environment
+### 3. Save IBM Quantum Platform Credentials
+Run this script once in Python to save your credentials locally[cite: 2]:
+
+from qiskit_ibm_runtime import QiskitRuntimeService
+
 QiskitRuntimeService.save_account(
     channel="ibm_quantum_platform",
     instance="<YOUR_CRN_INSTANCE_STRING>",
@@ -25,8 +27,177 @@ QiskitRuntimeService.save_account(
     overwrite=True,
     set_as_default=True
 )
-How to Run the NotebooksClone or download this repository:Bashgit clone [https://github.com/](https://github.com/)<your-username>/<your-repo-name>.git
+
+---
+
+## How to Run the Notebooks
+
+1. Clone this repository:
+git clone https://github.com/<your-username>/<your-repo-name>.git
 cd <your-repo-name>
-Start Jupyter Lab:Bashjupyter lab
-Open any challenge notebook (Challenge_1.ipynb to Challenge_4.ipynb).General Execution Pipeline used across notebooks:Define Circuits: Build QuantumCircuit using standard gates (H, X, CX, Ry) and measurement operations.   Initialize Backend: Connect via QiskitRuntimeService() and query service.least_busy(operational=True, simulator=False).   Transpile (ISA): Optimize using generate_preset_pass_manager(target=backend.target, optimization_level=3)[cite: 2].Execute: Submit via SamplerV2(mode=backend) with shots=100.   Visualize: Generate histograms using plot_histogram().   Challenge 1: Predict the OutputProblem StatementA quantum circuit can produce different measurement outcomes depending on the gates applied to a qubit.
-The task is to predict the output of simple quantum circuits before executing them and then compare the prediction with the actual measurement results.   TasksCreate a single-qubit quantum circuit.   Prepare the qubit in the initial state $\vert{}0\rangle$.   Construct and investigate the following circuits:   Circuit A: Apply an $X$ gate and measure.   Circuit B: Apply two $X$ gates and measure.   Circuit C: Apply an $H$ gate and measure.   Predict the expected measurement outcome before execution.   Execute each circuit for 100 shots.   Record measurement results.   Compare predictions with actual results.   Display results using a histogram.   Think Before You RunBefore executing the circuits, predict: What will happen after applying one $X$ gate? What will happen after applying two $X$ gates? What do you expect after applying an $H$ gate? Will Circuit C always produce the same measurement result?   Design ConstraintsUse exactly 1 qubit.   Include measurement.   Use only gates introduced during the workshop.   Created and executed using Qiskit.   Use 100 shots for each experiment.   Submission DeliverablesThe three quantum circuits.   Prediction for each circuit.   Measurement results for 100 shots.   Histograms of the results.   A short comparison between predictions and actual results.   Challenge 2: Make the Quantum Coin BiasedProblem StatementA Hadamard gate creates an equal superposition of $\vert{}0\rangle$ and $\vert{}1\rangle$, producing a result similar to a fair quantum coin. The task is to modify a single-qubit circuit so that the measurement outcomes are not equally distributed.   TasksCreate a single-qubit quantum circuit.   Start with the qubit in $\vert{}0\rangle$.   Apply quantum gates to create a state whose measurement probabilities for 0 and 1 are different.   Measure the qubit.   Execute the circuit for 100 shots.   Observe the number of 0 and 1 outcomes.   Display results using a histogram.   Try to create different degrees of bias.   Think Before You RunBefore executing your circuit, predict:Will 0 or 1 occur more frequently?   Approximately what percentage of the measurements will produce each outcome?   What happens if you change the gates in your circuit?   Design ConstraintsUse exactly 1 qubit.   Include measurement.   Use no more than 4 quantum gates before measurement.   Created and executed using Qiskit.   Use 100 shots.   Bonus ChallengeDesign two different circuits: one where 0 occurs more frequently and one where 1 occurs more frequently.   Compare their histograms.   Submission DeliverablesQuantum circuit.   Predicted probabilities.   Measurement results for 100 shots.   Histogram of the results.   A short explanation of how gates changed the measurement distribution.   Challenge Question: How can quantum gates change the probability of obtaining 0 or 1 when a qubit is measured?   Challenge 3: Can you change the correlation?Problem StatementTwo qubits can be prepared in a state where their measurement outcomes are strongly correlated. The task is to modify a two-qubit circuit and investigate whether you can change the relationship between the two measurement outcomes.   TasksCreate a two-qubit quantum circuit.   Start from the Bell-state circuit demonstrated during the workshop.   Add or modify one quantum gate.   Measure both qubits.   Execute the circuit for 100 shots.   Observe measurement results.   Display results using a histogram.   Compare results with the original circuit.   Explain how the modification changed the measurement outcomes.   Think Before You RunBefore executing your modified circuit, predict: Which outcomes do you expect? Will the two qubits still produce the same outcomes? Will 00 and 11 dominate? Could 01 and 10 become more frequent?   Design ConstraintsUse exactly 2 qubits.   Measure both qubits.   Start from the Bell-state circuit.   Add or modify only one quantum gate.   Use no more than 4 quantum gates before measurement.   Created and executed using Qiskit.   Use 100 shots.   Submission DeliverablesOriginal circuit.   Modified circuit.   Prediction before execution.   Measurement results for both circuits.   Histograms.   A short explanation of the observed change.   Challenge 4: Quantum Correlation SwitchProblem StatementIn Challenge 3, how a quantum circuit can produce correlated outcomes is investigated. Now, design a circuit that switches between correlated and opposite measurement outcomes. The goal is to create two different two-qubit behaviors using only a small number of quantum gates.   TasksPart A - Correlated Outcomes: Design a two-qubit circuit in which the measurement results are predominantly 00 and 11. Run the circuit for 100 shots and record the results.   Part B - Opposite Outcomes: Modify your circuit so that the measurement results are predominantly 01 and 10. Run the modified circuit for 100 shots and record the results.   Part C - Compare: Compare the two circuits using histograms. Explain:   Which outcomes are dominant in Part A?   Which outcomes are dominant in Part B?   What changed between the two circuits?   Why did the measurement relationship change?   Think Before You RunBefore executing your circuits, predict: Which outcomes should dominate in Part A? Which outcomes should dominate in Part B? Will all four possible outcomes appear? Why might some outcomes be much more frequent than others?   Design ConstraintsUse exactly 2 qubits.   Measure both qubits.   Use no more than 4 quantum gates before measurement.   Use only gates introduced during the workshop.   Created and executed using Qiskit.   Use 100 shots for each experiment.   Submission DeliverablesCircuit for Part A.   Circuit for Part B.   Predictions for both circuits.   Measurement results for 100 shots.   Histograms for both circuits.   A comparison of the two experiments.   A short explanation of how the circuit produces the different correlations.  
+
+2. Start Jupyter Lab:
+jupyter lab
+
+3. Standard Execution Pipeline used in each challenge notebook:
+* Build Circuits: Construct circuits using standard gates (H, X, CX, Ry) and measurement registers[cite: 1, 2, 4, 5].
+* Connect Backend: Initialize QiskitRuntimeService() and select the least busy QPU via service.least_busy(operational=True, simulator=False)[cite: 2].
+* Transpile: Optimize for device topology using generate_preset_pass_manager(target=backend.target, optimization_level=3)[cite: 2].
+* Run: Execute using SamplerV2(mode=backend) with shots=100[cite: 1, 3, 4, 5].
+* Visualize: Display measurement distributions with plot_histogram()[cite: 1, 2, 3, 4, 5].
+
+---
+
+## Challenge 1: Predict the Output
+
+### Problem Statement
+A quantum circuit can produce different measurement outcomes depending on the gates applied to a qubit[cite: 4].
+Your task is to predict the output of simple quantum circuits before executing them and then compare your prediction with the actual measurement results[cite: 4].
+
+### Tasks
+1. Create a single-qubit quantum circuit[cite: 4].
+2. Prepare the qubit in the initial state |0>[cite: 4].
+3. Construct and investigate the following circuits[cite: 4]:
+   * Circuit A: Apply an X gate and measure[cite: 4].
+   * Circuit B: Apply two X gates and measure[cite: 4].
+   * Circuit C: Apply an H gate and measure[cite: 4].
+4. Before executing each circuit, predict the expected measurement outcome[cite: 4].
+5. Execute each circuit for 100 shots[cite: 4].
+6. Record the measurement results[cite: 4].
+7. Compare your predictions with the actual results[cite: 4].
+8. Display the results using a histogram[cite: 4].
+
+### Think Before You Run
+Before executing the circuits, predict[cite: 4]:
+* What will happen after applying one X gate[cite: 4]?
+* What will happen after applying two X gates[cite: 4]?
+* What do you expect after applying an H gate[cite: 4]?
+* Will Circuit C always produce the same measurement result[cite: 4]?
+
+### Design Constraints
+* Use exactly 1 qubit[cite: 4].
+* Include measurement[cite: 4].
+* Use only the gates introduced in the workshop[cite: 4].
+* Be created and executed using Qiskit[cite: 4].
+* Use 100 shots for each experiment[cite: 4].
+
+### Submission Deliverables
+* The three quantum circuits[cite: 4].
+* Your prediction for each circuit[cite: 4].
+* Measurement results for 100 shots[cite: 4].
+* Histograms of the results[cite: 4].
+* A short comparison between your predictions and the actual results[cite: 4].
+
+---
+
+## Challenge 2: Make the Quantum Coin Biased
+
+### Problem Statement
+A Hadamard gate creates an equal superposition of |0> and |1>, producing a result similar to a fair quantum coin[cite: 5]. But can you control the measurement probabilities[cite: 5]? Your task is to modify a single-qubit circuit so that the measurement outcomes are not equally distributed[cite: 5].
+
+### Tasks
+1. Create a single-qubit quantum circuit[cite: 5].
+2. Start with the qubit in |0>[cite: 5].
+3. Apply quantum gates to create a state whose measurement probabilities for 0 and 1 are different[cite: 5].
+4. Measure the qubit[cite: 5].
+5. Execute the circuit for 100 shots[cite: 5].
+6. Observe the number of 0 and 1 outcomes[cite: 5].
+7. Display the results using a histogram[cite: 5].
+8. Try to create different degrees of bias[cite: 5].
+
+### Think Before You Run
+Before executing your circuit, predict[cite: 5]:
+* Will 0 or 1 occur more frequently[cite: 5]?
+* Approximately what percentage of the measurements will produce each outcome[cite: 5]?
+* What happens if you change the gates in your circuit[cite: 5]?
+
+### Design Constraints
+* Use exactly 1 qubit[cite: 5].
+* Include measurement[cite: 5].
+* Use no more than 4 quantum gates before measurement[cite: 5].
+* Be created and executed using Qiskit[cite: 5].
+* Use 100 shots[cite: 5].
+
+### Bonus Challenge
+Try to design two different circuits[cite: 5]:
+* One where 0 occurs more frequently[cite: 5].
+* One where 1 occurs more frequently[cite: 5].
+* Compare their histograms[cite: 5].
+
+### Submission Deliverables
+* Your quantum circuit[cite: 5].
+* Your predicted probabilities[cite: 5].
+* Measurement results for 100 shots[cite: 5].
+* Histogram of the results[cite: 5].
+* A short explanation of how your gates changed the measurement distribution[cite: 5].
+* Challenge Question: How can quantum gates change the probability of obtaining 0 or 1 when a qubit is measured[cite: 5]?
+
+---
+
+## Challenge 3: Can You Change the Correlation?
+
+### Problem Statement
+Two qubits can be prepared in a state where their measurement outcomes are strongly correlated[cite: 1]. Your task is to modify a two-qubit circuit and investigate whether you can change the relationship between the two measurement outcomes[cite: 1].
+
+### Tasks
+1. Create a two-qubit quantum circuit[cite: 1].
+2. Start from the Bell-state circuit demonstrated during the workshop[cite: 1].
+3. Add or modify one quantum gate[cite: 1].
+4. Measure both qubits[cite: 1].
+5. Execute the circuit for 100 shots[cite: 1].
+6. Observe the measurement results[cite: 1].
+7. Display the results using a histogram[cite: 1].
+8. Compare the results with the original circuit[cite: 1].
+9. Explain how the modification changed the measurement outcomes[cite: 1].
+
+### Think Before You Run
+Before executing your modified circuit, predict[cite: 1]:
+* Which outcomes do you expect[cite: 1]?
+* Will the two qubits still produce the same outcomes[cite: 1]?
+* Will 00 and 11 dominate[cite: 1]?
+* Could 01 and 10 become more frequent[cite: 1]?
+
+### Design Constraints
+* Use exactly 2 qubits[cite: 1].
+* Measure both qubits[cite: 1].
+* Start from the Bell-state circuit[cite: 1].
+* Add or modify only one quantum gate[cite: 1].
+* Use no more than 4 quantum gates before measurement[cite: 1].
+* Be created and executed using Qiskit[cite: 1].
+* Use 100 shots[cite: 1].
+
+### Submission Deliverables
+* Original circuit[cite: 1].
+* Modified circuit[cite: 1].
+* Prediction before execution[cite: 1].
+* Measurement results for both circuits[cite: 1].
+* Histograms[cite: 1].
+* A short explanation of the observed change[cite: 1].
+
+---
+
+## Challenge 4: Quantum Correlation Switch
+
+### Problem Statement
+In Challenge 3, how a quantum circuit can produce correlated outcomes is investigated[cite: 3]. Now, design a circuit that switches between correlated and opposite measurement outcomes[cite: 3]. Your goal is to create two different two-qubit behaviors using only a small number of quantum gates[cite: 3].
+
+### Tasks
+* Part A - Correlated Outcomes: Design a two-qubit circuit in which the measurement results are predominantly 00 and 11[cite: 3]. Run the circuit for 100 shots and record the results[cite: 3].
+* Part B - Opposite Outcomes: Modify your circuit so that the measurement results are predominantly 01 and 10[cite: 3]. Run the modified circuit for 100 shots and record the results[cite: 3].
+* Part C - Compare: Compare the two circuits using histograms[cite: 3]. Explain[cite: 3]:
+  * Which outcomes are dominant in Part A[cite: 3]?
+  * Which outcomes are dominant in Part B[cite: 3]?
+  * What changed between the two circuits[cite: 3]?
+  * Why did the measurement relationship change[cite: 3]?
+
+### Think Before You Run
+Before executing your circuits, predict[cite: 3]:
+* Which outcomes should dominate in Part A[cite: 3]?
+* Which outcomes should dominate in Part B[cite: 3]?
+* Will all four possible outcomes appear[cite: 3]?
+* Why might some outcomes be much more frequent than others[cite: 3]?
+
+### Design Constraints
+* Use exactly 2 qubits[cite: 3].
+* Measure both qubits[cite: 3].
+* Use no more than 4 quantum gates before measurement
